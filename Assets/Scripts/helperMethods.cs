@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class helperMethods : MonoBehaviour
 {
@@ -20,8 +21,9 @@ public class helperMethods : MonoBehaviour
         return Mathf.Sqrt((xDifference * xDifference) + (zDifference * zDifference));
     }
 
-    public static void moveToPoint(GameObject obj, Vector3 point)
+    public static void moveToPoint(NavMeshAgent agent, Vector3 point)
     {
-
+        // Set the destination for the NavMeshAgent
+        agent.destination = point;
     }
 }
