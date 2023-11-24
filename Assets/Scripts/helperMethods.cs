@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class helperMethods : MonoBehaviour
+public class HelperMethods : MonoBehaviour
 {
 
 

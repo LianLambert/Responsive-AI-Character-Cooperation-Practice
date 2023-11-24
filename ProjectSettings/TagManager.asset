@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - enemy
   - treasure
   - knight
+  - minotaur
   layers:
   - Default
   - TransparentFX

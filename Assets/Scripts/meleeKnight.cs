@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class meleeKnight : knight
+public class MeleeKnight : Knight
 {
     private float attackRadius = 2;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 // NOTE: entire class for testing purposes only
-public class clickToMove : MonoBehaviour
+public class ClickToMove : MonoBehaviour
 {
     public NavMeshAgent agent;
 

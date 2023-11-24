@@ -281,7 +281,7 @@ Transform:
   - {fileID: 20477417}
   - {fileID: 20544899}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &20565389
 Transform:
@@ -502,9 +502,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7583405136424c63b99d1f4d0b68f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   treasure: {fileID: 20807667}
   attackSphere: {fileID: 2056125490}
+  agent: {fileID: 95206688076128553}
+  knightAttacking: {fileID: 0}
 --- !u!1 &77116578
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +541,7 @@ Transform:
   - {fileID: 1580196622}
   - {fileID: 720262977}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &139283691
 GameObject:
@@ -1013,7 +1014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalScale.x
@@ -1029,15 +1030,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 75.92
+      value: 46.3
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 45
+      value: 25.6
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1911,6 +1912,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1502200652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502200646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b896f537c246f490d8b6b90193e75d93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasure: {fileID: 20807667}
+  minotaur: {fileID: 1975194352976912}
+  hasTreasure: 0
+  attacked: 0
 --- !u!1 &1580196621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2557,7 +2574,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1956392743
 GameObject:
@@ -2592,7 +2609,7 @@ Transform:
   - {fileID: 339885593}
   - {fileID: 1249499774}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1990610657
 GameObject:
@@ -3444,9 +3461,10 @@ GameObject:
   - component: {fileID: 95206688076128552}
   - component: {fileID: 48580953}
   - component: {fileID: 95206688076128553}
+  - component: {fileID: 95206688076128554}
   m_Layer: 0
   m_Name: Minotaur
-  m_TagString: enemy
+  m_TagString: minotaur
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3847,7 +3865,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975194352976912}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 37.8, y: 0.5, z: 31.96}
+  m_LocalPosition: {x: 37.8, y: 0.5, z: 32.14}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3866,7 +3884,7 @@ Transform:
   - {fileID: 4082374516272974}
   - {fileID: 4997796244676896}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4748345334756610
 Transform:
@@ -4053,6 +4071,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &95206688076128554
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975194352976912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.74, y: 1.13, z: 0.65}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!137 &137184358538475940
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
