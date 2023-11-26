@@ -9,13 +9,26 @@ public class MeleeKnight : Knight
     // Start is called before the first frame update
     void Start()
     {
-       
+        hits = 0;
+
+        foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
+        {
+            if (knight != this)
+            {
+                knight.GetComponent<Knight>().knightDied.AddListener(OnOtherKnightDied);
+                otherKnights.Add(knight);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (attacked)
+        {
+            attacked = false;
+            Attacked();
+        }
     }
 
     protected override bool CanAttackMinotaur()

@@ -7,7 +7,7 @@ public class MinotaurAttackSphere : MonoBehaviour
     private void OnEnable()
     {
         // Perform your intersection check logic here
-        Collider[] colliders = Physics.OverlapSphere(transform.position, GetComponent<SphereCollider>().radius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 6);
 
         foreach (Collider collider in colliders)
         {

@@ -8,13 +8,27 @@ public class DistanceKnight : Knight
     // Start is called before the first frame update
     void Start()
     {
-        maxHits = (int) Mathf.Floor(maxHits / 2);
+        hits = 0;
+        maxHits = (int)Mathf.Floor(maxHits / 2);
+
+        foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
+        {
+            if (knight != this)
+            {
+                knight.GetComponent<Knight>().knightDied.AddListener(OnOtherKnightDied);
+                otherKnights.Add(knight);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (attacked)
+        {
+            attacked = false;
+            Attacked();
+        }
     }
 
     protected override bool CanAttackMinotaur()

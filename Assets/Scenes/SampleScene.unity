@@ -359,6 +359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 20565151}
+  - component: {fileID: 20807668}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: treasure
@@ -366,6 +367,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!208 &20807668
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20807667}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.75, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &20873335
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,7 +788,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 0.5, z: 0.55}
+  m_Extents: {x: 0.5, y: 0.5, z: 1}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -999,7 +1016,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 0.5, z: 0.55}
+  m_Extents: {x: 1, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -1218,7 +1235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1226,7 +1243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 29.7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 416546, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1258,7 +1275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Controller
@@ -1547,7 +1564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Controller
@@ -1937,7 +1954,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 0.5, z: 0.55}
+  m_Extents: {x: 0.5, y: 0.5, z: 1}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -2097,7 +2114,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 0.5, z: 0.55}
+  m_Extents: {x: 1, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -2631,7 +2648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Controller
@@ -2863,7 +2880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9569962, guid: fe2a5bf9b4c2d4a4b9853a8506f18c40, type: 3}
       propertyPath: m_Controller
@@ -3910,6 +3927,7 @@ GameObject:
   - component: {fileID: 2056125494}
   - component: {fileID: 2056125493}
   - component: {fileID: 2056125492}
+  - component: {fileID: 2056125495}
   m_Layer: 0
   m_Name: attackSphere
   m_TagString: Untagged
@@ -3995,6 +4013,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056125490}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2056125495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056125490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9d9116ec75d4716adb0306a8cd12bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2080309390
 GameObject:
   m_ObjectHideFlags: 0
