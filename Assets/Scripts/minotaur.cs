@@ -23,6 +23,7 @@ public class Minotaur : HelperMethods
         myAnimator = GetComponent<Animator>();
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
+            knight.GetComponent<Knight>().knightDied.AddListener(OnKnightDied);
             knights.Add(knight);
         }
     }
@@ -147,10 +148,9 @@ public class Minotaur : HelperMethods
         {
             if (CanSeeKnight(knight))
             {
-                
-                float distance = Distance2D(treasure, knight);
+                float distance = Distance2D(this.gameObject, knight);
 
-                if (distance < closestDistance && distance <= maxDistanceToTreasure)
+                if (distance < closestDistance && Distance2D(treasure, knight) <= maxDistanceToTreasure)
                 {
                     closestDistance = distance;
                     closestVisibleKnight = knight;
@@ -177,5 +177,19 @@ public class Minotaur : HelperMethods
         }
 
         return false;
+    }
+
+    private void OnKnightDied()
+    {
+        knights = new List<GameObject>();
+        GameObject[] knightsArray = GameObject.FindGameObjectsWithTag("knight");
+
+        if (knightsArray != null && knightsArray.Length > 0)
+        {
+            foreach (GameObject knight in knightsArray)
+            {
+                knights.Add(knight);
+            }
+        }
     }
 }

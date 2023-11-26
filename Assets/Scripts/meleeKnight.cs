@@ -20,6 +20,6 @@ public class MeleeKnight : Knight
 
     protected override bool CanAttackMinotaur()
     {
-        throw new System.NotImplementedException();
+        return Distance2D(minotaur, this.gameObject) <= attackRadius;
     }
 }
