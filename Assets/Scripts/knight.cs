@@ -6,6 +6,7 @@ public abstract class Knight : HelperMethods
 {
     [SerializeField] protected GameObject treasure;
     [SerializeField] protected GameObject minotaur;
+    [SerializeField] protected GameObject minotaurAttackSphere;
     protected List<GameObject> otherKnights;
     protected float speed;
     protected float attackCooldown = 1;
