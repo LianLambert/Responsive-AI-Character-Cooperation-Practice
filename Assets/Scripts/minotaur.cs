@@ -8,14 +8,14 @@ public class Minotaur : HelperMethods
     [SerializeField] private GameObject treasure;
     [SerializeField] private GameObject attackSphere;
     [SerializeField] private NavMeshAgent agent;
-    private Animator myAnimator;
+    private readonly float maxDistanceFromTreasure = 35f;
+    public readonly float attackRadius = 6f;
+    private readonly float attackCooldown = 2f;
+    private float attackCooldownTimer = 2f;
     private List<GameObject> knights = new List<GameObject>();
-    private float maxDistanceToTreasure = 35f;
-    private float attackRadius = 6f;
-    private float attackCooldown = 2f;
-    private float cooldownTimer = 2f;
     public bool attackedThisFrame = false;
     public GameObject knightAttacking = null;
+    private Animator myAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -30,20 +30,20 @@ public class Minotaur : HelperMethods
     // Update is called once per frame
     void Update()
     {
-        // Remove destroyed knights from the list
+        // remove destroyed knights from the list
         knights.RemoveAll(knight => knight == null);
 
         // update cooldown
-        if (cooldownTimer < attackCooldown)
+        if (attackCooldownTimer < attackCooldown)
         {
-            cooldownTimer += Time.deltaTime;
+            attackCooldownTimer += Time.deltaTime;
         }
 
-        // Set the animator parameter
-        myAnimator.SetBool("isMoving", agent.velocity.magnitude > 0.1f);
+        // set the animator parameter
+        myAnimator.SetBool("isMoving", agent.velocity.magnitude > 0.05f);
 
+        // check for targets
         GameObject target = FindAttackTarget();
-        // Debug.Log("target is null: " + target == null);
         
         // if there is a knight we should attack
         if (target != null)
@@ -51,36 +51,36 @@ public class Minotaur : HelperMethods
             // if we're not within attack range, move towards them
             if (Distance2D(target, this.gameObject) > attackRadius)
             {
-                // Debug.Log("moving towards target");
                 agent.SetDestination(target.transform.position);
             }
             // if we're in attack range, attack
             else
             {
-                // Debug.Log("attacking");
+                agent.SetDestination(this.transform.position);
                 Attack();
             }
         }
+
+        // if there is not a knight to attack and we are too far from the treasure, return to treasure
+        else if (Distance2D(this.gameObject, treasure) > maxDistanceFromTreasure)
+        {
+            agent.SetDestination(treasure.transform.position);
+        }
+
+        // otherwise idle
         else
         {
-            // if there is not a knight we should attack
-            agent.SetDestination(transform.position);
+            agent.SetDestination(this.gameObject.transform.position);
         }
     }
 
     // determine an attack target based on the following priorities:
-          // 1) if a knight has the treasure, attack them
-          // 2) if a knight is attacking the minotaur, attack them
-          // 3) if a knight is visible and not too far from the treasure, attack them
+        // 1) if a knight is attacking the minotaur/recently attacked, attack them
+        // 2) if a knight has the treasure, attack them
+        // 3) if a knight is visible and not too far from the treasure, attack them
     private GameObject FindAttackTarget()
     {
-        if (KnightWithTreasure() != null)
-        {
-            // Debug.Log("found knight with treasure");
-            return KnightWithTreasure();
-        }
-
-        else if (knightAttacking != null)
+        if (knightAttacking != null)
         {
             // Debug.Log("found knight that is attacking");
             if (attackedThisFrame)
@@ -90,11 +90,16 @@ public class Minotaur : HelperMethods
             }
             return knightAttacking;
         }
+        else if (KnightWithTreasure() != null)
+        {
+            // Debug.Log("found knight with treasure");
+            return KnightWithTreasure();
+        }
 
-        else if (KnightToAttack() != null)
+        else if (ClosestVisibleKnight() != null)
         {
             // Debug.Log("found knight in range");
-            return KnightToAttack();
+            return ClosestVisibleKnight();
         }
 
         // Debug.Log("returning null");
@@ -105,16 +110,17 @@ public class Minotaur : HelperMethods
     private void Attack()
     {
         // can only attack if already cooled down
-        if (cooldownTimer >= attackCooldown)
+        if (attackCooldownTimer >= attackCooldown)
         {
             myAnimator.SetTrigger("Attack");
-            cooldownTimer = 0f;
+            attackCooldownTimer = 0f;
             StartCoroutine(AttackSequence());
         }
     }
 
     private IEnumerator AttackSequence()
     {
+        // activate the attackSphere for 1s
         attackSphere.SetActive(true);
         yield return new WaitForSeconds(1f);
         attackSphere.SetActive(false);
@@ -140,9 +146,8 @@ public class Minotaur : HelperMethods
         return null;
     }
 
-    // picks a knight to attack based on the closest visible knight to the minotaur
-    // which does not require the minotaur to be too far from the treasure
-    private GameObject KnightToAttack()
+    // picks a knight to attack based on the closest visible knight
+    private GameObject ClosestVisibleKnight()
     {
         GameObject closestVisibleKnight = null;
         float closestDistance = float.MaxValue;
@@ -153,7 +158,8 @@ public class Minotaur : HelperMethods
             {
                 float distance = Distance2D(this.gameObject, knight);
 
-                if (distance < closestDistance && Distance2D(treasure, knight) <= maxDistanceToTreasure)
+                // don't attack if it requires being too far from the treasure
+                if (distance < closestDistance && Distance2D(treasure, knight) <= maxDistanceFromTreasure)
                 {
                     closestDistance = distance;
                     closestVisibleKnight = knight;

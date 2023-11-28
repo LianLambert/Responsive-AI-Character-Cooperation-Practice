@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class DistanceKnight : Knight
 {
+    private LineRenderer lineRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         hits = 0;
         maxHits = (int)Mathf.Floor(maxHits / 2);
+        myAnimator = GetComponent<Animator>();
+
+        // set up line renderer to show attack
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = false;
+        lineRenderer.material.color = Color.blue;
 
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
@@ -24,6 +31,10 @@ public class DistanceKnight : Knight
     // Update is called once per frame
     void Update()
     {
+        // update timers and animation
+        UpdateTimers();
+        myAnimator.SetBool("isMoving", agent.velocity.magnitude > 0.05f);
+
         if (attacked)
         {
             attacked = false;
@@ -31,7 +42,7 @@ public class DistanceKnight : Knight
         }
     }
 
-    protected override bool CanAttackMinotaur()
+    protected override bool CanAttack()
     {
         // cast a ray
         Vector3 direction = minotaur.transform.position - transform.position;
@@ -48,9 +59,26 @@ public class DistanceKnight : Knight
         return false;
     }
 
-    private void Attack()
-    {
-        minotaur.GetComponent<Minotaur>().knightAttacking = this.gameObject;
 
+    protected override void Attack()
+    {
+        // can only attack if already cooled down
+        if (attackCooldownTimer >= attackCooldown)
+        {
+            myAnimator.SetTrigger("Attack");
+            attackCooldownTimer = 0f;
+            minotaur.GetComponent<Minotaur>().knightAttacking = this.gameObject;
+            StartCoroutine(AttackSequence());
+        }
+    }
+
+    private IEnumerator AttackSequence()
+    {
+        // draw a blue line from knight to minotaur for 1s
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, minotaur.transform.position);
+        yield return new WaitForSeconds(1f);
+        lineRenderer.enabled = false;
     }
 }

@@ -10,7 +10,7 @@ public class gameOutcome : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameLostText;
     private bool gameWon = false;
     private bool gameLost = false;
-    private int knights = 4;
+    private int initialKnightCount = 4;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,7 @@ public class gameOutcome : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // when the game finishes, pause all characters and display appropriate message
         if (gameLost)
         {
             PauseNavMeshAgents();
@@ -49,8 +50,10 @@ public class gameOutcome : MonoBehaviour
 
     private void OnKnightDied()
     {
-        knights -= 1;
-        if (knights == 0)
+        initialKnightCount -= 1;
+
+        // game is lost if every knight dies
+        if (initialKnightCount == 0)
         {
             gameLost = true;
         }
@@ -60,9 +63,13 @@ public class gameOutcome : MonoBehaviour
     {
         NavMeshAgent[] navMeshAgents = FindObjectsOfType<NavMeshAgent>();
 
+        // pause each navmesh agent
         foreach (NavMeshAgent agent in navMeshAgents)
         {
-            agent.isStopped = true;
+            if (agent != null)
+            {
+                agent.isStopped = true;
+            }
         }
     }
 }

@@ -18,10 +18,4 @@ public class HelperMethods : MonoBehaviour
         float zDifference = obj1.transform.position.z - obj2.transform.position.z;
         return Mathf.Sqrt((xDifference * xDifference) + (zDifference * zDifference));
     }
-
-    public static void MoveToPoint(NavMeshAgent agent, Vector3 point)
-    {
-        // Set the destination for the NavMeshAgent
-        agent.destination = point;
-    }
 }

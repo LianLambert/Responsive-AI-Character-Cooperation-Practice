@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MinotaurAttackSphere : MonoBehaviour
 {
+    [SerializeField] private GameObject minotaur;
+
     private void OnEnable()
     {
         // Perform your intersection check logic here
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 6);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, minotaur.GetComponent<Minotaur>().attackRadius);
 
         foreach (Collider collider in colliders)
         {
