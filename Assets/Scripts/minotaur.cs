@@ -23,7 +23,6 @@ public class Minotaur : HelperMethods
         myAnimator = GetComponent<Animator>();
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
-            knight.GetComponent<Knight>().knightDied.AddListener(OnKnightDied);
             knights.Add(knight);
         }
     }
@@ -31,8 +30,11 @@ public class Minotaur : HelperMethods
     // Update is called once per frame
     void Update()
     {
+        // Remove destroyed knights from the list
+        knights.RemoveAll(knight => knight == null);
+
         // update cooldown
-        if(cooldownTimer < attackCooldown)
+        if (cooldownTimer < attackCooldown)
         {
             cooldownTimer += Time.deltaTime;
         }
@@ -121,6 +123,7 @@ public class Minotaur : HelperMethods
     // if a knight has the treasure, returns the night, otherwise returns null
     private GameObject KnightWithTreasure()
     {
+
         foreach (GameObject knight in knights)
         {
             // have to accomodate for different scripts
@@ -177,18 +180,5 @@ public class Minotaur : HelperMethods
         }
 
         return false;
-    }
-
-    private void OnKnightDied()
-    {
-        Debug.Log("on knight died called in minotaur script");
-
-        foreach (GameObject knight in knights)
-        {
-            if (knight.activeSelf)
-            {
-                knights.Remove(knight);
-            }
-        }
     }
 }

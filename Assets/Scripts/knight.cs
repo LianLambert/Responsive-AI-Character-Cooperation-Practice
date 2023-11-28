@@ -26,9 +26,19 @@ public abstract class Knight : HelperMethods
         hits += 1;
         if (hits >= maxHits)
         {
-            Debug.Log("invoked knight died");
             knightDied.Invoke();
-            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+    }
+
+    protected void OnOtherKnightDied()
+    {
+        GameObject[] knightObjects = GameObject.FindGameObjectsWithTag("knight");
+
+        if (knightObjects.Length > 0)
+        {
+            List<GameObject> newKnights = new List<GameObject>(knightObjects);
+            otherKnights = newKnights;
         }
     }
 }

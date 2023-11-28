@@ -53,16 +53,4 @@ public class DistanceKnight : Knight
         minotaur.GetComponent<Minotaur>().knightAttacking = this.gameObject;
 
     }
-
-
-    protected void OnOtherKnightDied()
-    {
-        foreach (GameObject knight in otherKnights)
-        {
-            if (knight.activeSelf)
-            {
-                otherKnights.Remove(knight);
-            }
-        }
-    }
 }
