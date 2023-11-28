@@ -41,7 +41,7 @@ public class Minotaur : HelperMethods
         myAnimator.SetBool("isMoving", agent.velocity.magnitude > 0.1f);
 
         GameObject target = FindAttackTarget();
-        Debug.Log("target is null: " + target == null);
+        // Debug.Log("target is null: " + target == null);
         
         // if there is a knight we should attack
         if (target != null)
@@ -49,13 +49,13 @@ public class Minotaur : HelperMethods
             // if we're not within attack range, move towards them
             if (Distance2D(target, this.gameObject) > attackRadius)
             {
-                Debug.Log("moving towards target");
+                // Debug.Log("moving towards target");
                 agent.SetDestination(target.transform.position);
             }
             // if we're in attack range, attack
             else
             {
-                Debug.Log("attacking");
+                // Debug.Log("attacking");
                 Attack();
             }
         }
@@ -74,13 +74,13 @@ public class Minotaur : HelperMethods
     {
         if (KnightWithTreasure() != null)
         {
-            Debug.Log("found knight with treasure");
+            // Debug.Log("found knight with treasure");
             return KnightWithTreasure();
         }
 
         else if (knightAttacking != null)
         {
-            Debug.Log("found knight that is attacking");
+            // Debug.Log("found knight that is attacking");
             if (attackedThisFrame)
             {
                 myAnimator.SetTrigger("Take Damage");
@@ -91,11 +91,11 @@ public class Minotaur : HelperMethods
 
         else if (KnightToAttack() != null)
         {
-            Debug.Log("found knight in range");
+            // Debug.Log("found knight in range");
             return KnightToAttack();
         }
 
-        Debug.Log("returning null");
+        // Debug.Log("returning null");
         return null;
 
     }
@@ -181,14 +181,13 @@ public class Minotaur : HelperMethods
 
     private void OnKnightDied()
     {
-        knights = new List<GameObject>();
-        GameObject[] knightsArray = GameObject.FindGameObjectsWithTag("knight");
+        Debug.Log("on knight died called in minotaur script");
 
-        if (knightsArray != null && knightsArray.Length > 0)
+        foreach (GameObject knight in knights)
         {
-            foreach (GameObject knight in knightsArray)
+            if (knight.activeSelf)
             {
-                knights.Add(knight);
+                knights.Remove(knight);
             }
         }
     }

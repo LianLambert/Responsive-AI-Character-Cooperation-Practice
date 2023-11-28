@@ -35,4 +35,16 @@ public class MeleeKnight : Knight
     {
         return Distance2D(minotaur, this.gameObject) <= attackRadius;
     }
+
+
+    protected void OnOtherKnightDied()
+    {
+        foreach (GameObject knight in otherKnights)
+        {
+            if (knight.activeSelf)
+            {
+                otherKnights.Remove(knight);
+            }
+        }
+    }
 }

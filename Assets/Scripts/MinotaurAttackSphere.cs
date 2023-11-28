@@ -13,7 +13,20 @@ public class MinotaurAttackSphere : MonoBehaviour
         {
             if (collider.gameObject.CompareTag("knight"))
             {
-                gameObject.GetComponent<Knight>().attacked = true;
+                // have to accomodate for different scripts
+                MeleeKnight meleeKnight = collider.GetComponent<MeleeKnight>();
+                DistanceKnight distanceKnight = collider.GetComponent<DistanceKnight>();
+
+                // Check if either script exists and has treasure
+                if (meleeKnight != null)
+                {
+                    meleeKnight.attacked = true;
+                }
+
+                else if (distanceKnight != null)
+                {
+                    distanceKnight.attacked = true;
+                }
             }
         }
     }

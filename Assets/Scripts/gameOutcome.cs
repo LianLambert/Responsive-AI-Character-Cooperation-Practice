@@ -9,20 +9,26 @@ public class gameOutcome : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameWonText;
     [SerializeField] private TextMeshProUGUI gameLostText;
     private bool gameWon = false;
+    private bool gameLost = false;
+    private int knights = 4;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameLostText.enabled = false;
+        gameWonText.enabled = false;
+
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
             knight.GetComponent<Knight>().gameWon.AddListener(OnGameWon);
+            knight.GetComponent<Knight>().knightDied.AddListener(OnKnightDied);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameLost())
+        if (gameLost)
         {
             PauseNavMeshAgents();
             Time.timeScale = 0;
@@ -41,16 +47,13 @@ public class gameOutcome : MonoBehaviour
         gameWon = true;
     }
 
-    private bool gameLost()
+    private void OnKnightDied()
     {
-        GameObject[] knightsArray = GameObject.FindGameObjectsWithTag("knight");
-
-        if (knightsArray == null || knightsArray.Length == 0)
+        knights -= 1;
+        if (knights == 0)
         {
-            return true;
+            gameLost = true;
         }
-
-        return false;
     }
 
     private void PauseNavMeshAgents()
