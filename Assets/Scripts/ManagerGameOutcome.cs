@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 
-public class gameOutcome : MonoBehaviour
+public class ManagerGameOutcome : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI gameWonText;
     [SerializeField] private TextMeshProUGUI gameLostText;
@@ -20,8 +20,9 @@ public class gameOutcome : MonoBehaviour
 
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
-            knight.GetComponent<Knight>().gameWon.AddListener(OnGameWon);
-            knight.GetComponent<Knight>().knightDied.AddListener(OnKnightDied);
+            Knight script = HelperMethods.GetKnightScript(knight);
+            script.gameWon.AddListener(OnGameWon);
+            script.knightDied.AddListener(OnKnightDied);
         }
     }
 

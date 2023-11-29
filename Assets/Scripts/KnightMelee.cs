@@ -1,22 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class DistanceKnight : Knight
+public class KnightMelee : Knight
 {
-    private LineRenderer lineRenderer;
+    [SerializeField] private GameObject attackSphere;
+    private float attackRadius = 6f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        hits = 0;
-        maxHits = (int)Mathf.Floor(maxHits / 2);
         myAnimator = GetComponent<Animator>();
-
-        // set up line renderer to show attack
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
-        lineRenderer.material.color = Color.blue;
 
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
@@ -42,43 +37,29 @@ public class DistanceKnight : Knight
         }
     }
 
-    protected override bool CanAttack()
+    public override bool CanAttack()
     {
-        // cast a ray
-        Vector3 direction = minotaur.transform.position - transform.position;
-
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit))
-        {
-            // if the ray hits the minotaur, it is visible
-            if (hit.collider.gameObject == minotaur)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return Distance2D(minotaur, gameObject) <= attackRadius;
     }
 
-
-    protected override void Attack()
+    public override void Attack()
     {
         // can only attack if already cooled down
         if (attackCooldownTimer >= attackCooldown)
         {
             myAnimator.SetTrigger("Attack");
             attackCooldownTimer = 0f;
-            minotaur.GetComponent<Minotaur>().knightAttacking = this.gameObject;
+            minotaur.GetComponent<Minotaur>().knightAttacking = gameObject;
+            minotaur.GetComponent<Minotaur>().attackedThisFrame = true;
             StartCoroutine(AttackSequence());
         }
     }
 
     private IEnumerator AttackSequence()
     {
-        // draw a blue line from knight to minotaur for 1s
-        lineRenderer.enabled = true;
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, minotaur.transform.position);
+        // activate the attackSphere for 1s
+        attackSphere.SetActive(true);
         yield return new WaitForSeconds(1f);
-        lineRenderer.enabled = false;
+        attackSphere.SetActive(false);
     }
 }

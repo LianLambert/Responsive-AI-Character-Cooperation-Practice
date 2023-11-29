@@ -3,35 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using TMPro;
 
 public abstract class Knight : HelperMethods
 {
-    [SerializeField] protected GameObject treasure;
-    [SerializeField] protected GameObject minotaur;
-    [SerializeField] protected NavMeshAgent agent;
-    protected List<Vector3> cornerPositions = new List<Vector3>
-    {
-        new Vector3(2f, 0.5f, 2f),
-        new Vector3(2f, 0.5f, 48f),
-        new Vector3(78f, 0.5f, 2f),
-        new Vector3(78f, 0.5f, 48f)
-    };
+    [SerializeField] public GameObject treasure;
+    [SerializeField] public GameObject minotaur;
+    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public TMP_Text taskText;
     protected List<GameObject> otherKnights = new List<GameObject>();
+    public List<HTNCompositeTask> taskList = new List<HTNCompositeTask>();
     protected Animator myAnimator;
     protected float attackCooldown = 1;
-    protected float attackCooldownTimer = 1f;
+    public float attackCooldownTimer = 1f;
     protected float treasurePickUpCooldown = 3;
     protected float treasurePickUpCooldownTimer = 3f;
     protected int maxHits = 5;
-    protected int hits;
+    protected int hits = 0;
     protected int treasureDroppedCooldown = 3;
+    public bool isThief = false;
     public bool hasTreasure = false;
     public bool attacked = false;
+    public UnityEvent treasureDropped = new UnityEvent();
     public UnityEvent knightDied = new UnityEvent();
     public UnityEvent gameWon = new UnityEvent();
     
-    protected abstract bool CanAttack();
-    protected abstract void Attack();
+    public abstract bool CanAttack();
+    public abstract void Attack();
 
     protected void Attacked()
     {
@@ -43,8 +41,8 @@ public abstract class Knight : HelperMethods
         if (hasTreasure)
         {
             treasurePickUpCooldown = 0f;
-            treasure.transform.position = this.transform.position;
-            treasure.SetActive(true);
+            treasure.transform.parent = null;
+            treasure.transform.position = new Vector3(this.transform.position.x, 2.4f, this.transform.position.z);
             hasTreasure = false;
         }
 
@@ -60,11 +58,9 @@ public abstract class Knight : HelperMethods
     {
         // if another knight died, update list of knights
         otherKnights.RemoveAll(knight => knight == null);
-
-        // replan!
     }
 
-    protected void RunWithTreasure()
+    public Vector3 ClosestCorner()
     {
         // find closest corner and head towards it
         float closestDistance = float.MaxValue;
@@ -81,7 +77,7 @@ public abstract class Knight : HelperMethods
             }
         }
 
-        agent.SetDestination(closestCornerPosition);
+        return closestCornerPosition;
     }
 
     protected void UpdateTimers()
@@ -98,4 +94,15 @@ public abstract class Knight : HelperMethods
             treasurePickUpCooldownTimer += Time.deltaTime;
         }
     }
+
+    public void ExecuteTask(HTNCompositeTask task)
+    {
+        StartCoroutine(ExecuteTaskCoroutine(task));
+    }
+
+    private IEnumerator ExecuteTaskCoroutine(HTNCompositeTask task)
+    {
+        yield return StartCoroutine(task.ExecuteTask(this));
+    }
+
 }

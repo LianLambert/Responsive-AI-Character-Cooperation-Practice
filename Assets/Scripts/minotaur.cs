@@ -82,7 +82,6 @@ public class Minotaur : HelperMethods
     {
         if (knightAttacking != null)
         {
-            // Debug.Log("found knight that is attacking");
             if (attackedThisFrame)
             {
                 myAnimator.SetTrigger("Take Damage");
@@ -92,17 +91,14 @@ public class Minotaur : HelperMethods
         }
         else if (KnightWithTreasure() != null)
         {
-            // Debug.Log("found knight with treasure");
             return KnightWithTreasure();
         }
 
         else if (ClosestVisibleKnight() != null)
         {
-            // Debug.Log("found knight in range");
             return ClosestVisibleKnight();
         }
 
-        // Debug.Log("returning null");
         return null;
 
     }
@@ -127,14 +123,14 @@ public class Minotaur : HelperMethods
     }
 
     // if a knight has the treasure, returns the night, otherwise returns null
-    private GameObject KnightWithTreasure()
+    public GameObject KnightWithTreasure()
     {
 
         foreach (GameObject knight in knights)
         {
             // have to accomodate for different scripts
-            MeleeKnight meleeKnight = knight.GetComponent<MeleeKnight>();
-            DistanceKnight distanceKnight = knight.GetComponent<DistanceKnight>();
+            KnightMelee meleeKnight = knight.GetComponent<KnightMelee>();
+            KnightDistance distanceKnight = knight.GetComponent<KnightDistance>();
 
             // Check if either script exists and has treasure
             if ((meleeKnight != null && meleeKnight.hasTreasure) || (distanceKnight != null && distanceKnight.hasTreasure))
@@ -186,5 +182,25 @@ public class Minotaur : HelperMethods
         }
 
         return false;
+    }
+
+    public Vector3 FurthestCorner()
+    {
+        // find closest corner and head towards it
+        float furthestDistance = float.MinValue;
+        Vector3 furthestCornerPosition = Vector3.zero;
+
+        foreach (Vector3 position in cornerPositions)
+        {
+            float distance = Vector3.Distance(this.transform.position, position);
+
+            if (distance > furthestDistance)
+            {
+                furthestDistance = distance;
+                furthestCornerPosition = position;
+            }
+        }
+
+        return furthestCornerPosition;
     }
 }
