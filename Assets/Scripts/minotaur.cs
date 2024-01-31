@@ -184,9 +184,9 @@ public class Minotaur : HelperMethods
         return false;
     }
 
-    public Vector3 FurthestCorner()
+    // find the furthest corner from the minotaur
+    public Vector3 FurthestCornerFromMinotaur()
     {
-        // find closest corner and head towards it
         float furthestDistance = float.MinValue;
         Vector3 furthestCornerPosition = Vector3.zero;
 

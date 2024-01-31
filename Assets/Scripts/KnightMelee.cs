@@ -39,7 +39,7 @@ public class KnightMelee : Knight
 
     public override bool CanAttack()
     {
-        return Distance2D(minotaur, gameObject) <= attackRadius;
+        return (Distance2D(minotaur, gameObject) <= attackRadius) && attackCooldownTimer >= attackCooldown;
     }
 
     public override void Attack()

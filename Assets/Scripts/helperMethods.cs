@@ -19,14 +19,13 @@ public class HelperMethods : MonoBehaviour
         return new Vector3(obj.transform.position.x, 0, obj.transform.position.z);
     }
 
-    // returns distance between two gameobjects disregarding y positions
+    // returns distance from a gameobject to something else disregarding y positions
     public static float Distance2D(GameObject obj1, GameObject obj2)
     {
         float xDifference = obj1.transform.position.x - obj2.transform.position.x;
         float zDifference = obj1.transform.position.z - obj2.transform.position.z;
         return Mathf.Sqrt((xDifference * xDifference) + (zDifference * zDifference));
     }
-
 
     public static float Distance2D(Knight obj1, GameObject obj2)
     {
@@ -42,6 +41,7 @@ public class HelperMethods : MonoBehaviour
         return Mathf.Sqrt((xDifference * xDifference) + (zDifference * zDifference));
     }
 
+    // returns whether game object or knight is a meleeKnight
     public static bool IsMeleeKnight(GameObject knight)
     {
         if (knight.GetComponent<KnightMelee>() != null)
@@ -62,6 +62,7 @@ public class HelperMethods : MonoBehaviour
         return false;
     }
 
+    // returns the script attacked to a knight
     public static Knight GetKnightScript(GameObject knight)
     {
         if (IsMeleeKnight(knight))

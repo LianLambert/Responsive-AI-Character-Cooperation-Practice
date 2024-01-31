@@ -45,6 +45,7 @@ public class KnightDistance : Knight
 
     public override bool CanAttack()
     {
+        bool canSee = false;
         // cast a ray
         Vector3 direction = minotaur.transform.position - transform.position;
 
@@ -53,11 +54,11 @@ public class KnightDistance : Knight
             // if the ray hits the minotaur, it is visible
             if (hit.collider.gameObject == minotaur)
             {
-                return true;
+                canSee = true;
             }
         }
 
-        return false;
+        return canSee && (attackCooldownTimer >= attackCooldown);
     }
 
 

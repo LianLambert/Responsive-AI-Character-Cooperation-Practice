@@ -6,24 +6,23 @@ public abstract class HTNCompositeTask : HelperMethods
 {
     [SerializeField] protected static GameObject treasure;
     [SerializeField] protected static GameObject minotaur;
-    public bool TaskComplete = false;
     protected List<HTNPrimitiveTask> subtasks;
 
     public IEnumerator ExecuteTask(Knight knight)
     {
+        // go through each subtask and execute one by one, in order
         foreach (HTNPrimitiveTask subtask in subtasks)
         {
             yield return knight.StartCoroutine(subtask.ExecuteTask(knight));
+
+            // if the thief picked up the treasure, update fields
             if (subtask.GetType() == typeof(HTNPrimitiveTask.PickUpTreasure))
             {
                 knight.hasTreasure = true;
                 knight.treasure.transform.parent = knight.transform;
                 knight.treasure.transform.localPosition = new Vector3(0f, 3, 0f);
-
             }
         }
-
-        TaskComplete = true;
     }
 
     // Main tasks

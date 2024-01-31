@@ -18,6 +18,7 @@ public class ManagerGameOutcome : MonoBehaviour
         gameLostText.enabled = false;
         gameWonText.enabled = false;
 
+        // listen to see if all the knights died or the game was won
         foreach (GameObject knight in GameObject.FindGameObjectsWithTag("knight"))
         {
             Knight script = HelperMethods.GetKnightScript(knight);

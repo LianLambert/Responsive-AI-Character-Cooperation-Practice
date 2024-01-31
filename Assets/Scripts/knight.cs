@@ -12,15 +12,13 @@ public abstract class Knight : HelperMethods
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public TMP_Text taskText;
     protected List<GameObject> otherKnights = new List<GameObject>();
-    public List<HTNCompositeTask> taskList = new List<HTNCompositeTask>();
     protected Animator myAnimator;
     protected float attackCooldown = 1;
     public float attackCooldownTimer = 1f;
     protected float treasurePickUpCooldown = 3;
-    protected float treasurePickUpCooldownTimer = 3f;
+    public float treasurePickUpCooldownTimer = 3f;
     protected int maxHits = 5;
     protected int hits = 0;
-    protected int treasureDroppedCooldown = 3;
     public bool isThief = false;
     public bool hasTreasure = false;
     public bool attacked = false;
@@ -37,13 +35,18 @@ public abstract class Knight : HelperMethods
         attackCooldownTimer = 0f;
         hits += 1;
 
-        // if the knight has the treasure, they drop it
+        // if the knight has the treasure
         if (hasTreasure)
         {
+            // they drop it and can't pick it up for 3s
+            hasTreasure = false;
             treasurePickUpCooldown = 0f;
+            treasureDropped.Invoke();
+
+            // drop treasure
             treasure.transform.parent = null;
             treasure.transform.position = new Vector3(this.transform.position.x, 2.4f, this.transform.position.z);
-            hasTreasure = false;
+            
         }
 
         // if the knight dies
@@ -54,15 +57,15 @@ public abstract class Knight : HelperMethods
         }
     }
 
+    // if another knight died, update list of knights
     protected void OnOtherKnightDied()
     {
-        // if another knight died, update list of knights
         otherKnights.RemoveAll(knight => knight == null);
     }
 
+    // find closest corner to the knight
     public Vector3 ClosestCorner()
     {
-        // find closest corner and head towards it
         float closestDistance = float.MaxValue;
         Vector3 closestCornerPosition = Vector3.zero;
         

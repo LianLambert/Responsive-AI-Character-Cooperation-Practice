@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class HTNKnight : MonoBehaviour
@@ -42,13 +41,13 @@ public class HTNKnight : MonoBehaviour
         // only run when the game is not over
         while (Time.timeScale != 0)
         {
-            EvaluateConditions();
+            EvaluateWorldState();
             ExecuteHTN();
             yield return new WaitForSeconds(2f);
         }
     }
 
-    private void EvaluateConditions()
+    private void EvaluateWorldState()
     {
         thiefSelected = !(thief == null);
 
@@ -75,7 +74,7 @@ public class HTNKnight : MonoBehaviour
         }
 
         // update everyone's task based on if they are the thief or not
-        UpdateAdventurerRoles();
+        UpdateKnightRoles();
     }
 
     private void SelectThief()
@@ -108,7 +107,7 @@ public class HTNKnight : MonoBehaviour
         }
     }
 
-    private void UpdateAdventurerRoles()
+    private void UpdateKnightRoles()
     {
         // let each adventurer know if they are a thief or not
         foreach (GameObject knight in knights)
